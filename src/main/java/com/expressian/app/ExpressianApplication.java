@@ -1,4 +1,4 @@
-package com.example.expressian;
+package com.expressian.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
