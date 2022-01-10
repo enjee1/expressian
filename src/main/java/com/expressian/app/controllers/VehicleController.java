@@ -1,6 +1,5 @@
 package com.expressian.app.controllers;
 
-import com.expressian.app.models.Customer;
 import com.expressian.app.models.Vehicle;
 import com.expressian.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
