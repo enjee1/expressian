@@ -22,8 +22,8 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Long customerId) {
-        return repository.findById(customerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public Customer getCustomerById(@PathVariable Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping

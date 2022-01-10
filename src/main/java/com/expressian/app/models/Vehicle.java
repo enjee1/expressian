@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Vehicle {
 
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     private Long id;
     private String make;
     private String model;

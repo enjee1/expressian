@@ -22,8 +22,8 @@ public class VehicleController {
     }
 
     @GetMapping("/{id}")
-    public Vehicle getVehicleById(@PathVariable Long vehicleId) {
-        return repository.findById(vehicleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public Vehicle getVehicleById(@PathVariable Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
