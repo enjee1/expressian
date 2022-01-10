@@ -1,9 +1,11 @@
 package com.expressian.app.controllers;
 
+import com.expressian.app.models.Customer;
 import com.expressian.app.models.Vehicle;
 import com.expressian.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,7 +29,25 @@ public class VehicleController {
     }
 
     @PostMapping
-    public @ResponseBody Vehicle createVehicle(@RequestBody Vehicle newVehicle) {
-        return repository.save(newVehicle);
+    public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle newVehicle) {
+        return new ResponseEntity<>(repository.save(newVehicle), HttpStatus.CREATED);
+
+    }
+
+    @PutMapping("/{id}")
+    public @ResponseBody Vehicle updateVehicle(@PathVariable Long id, @RequestBody Vehicle updates) {
+        Vehicle vehicle = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (updates.getMake() != null) vehicle.setMake(updates.getMake());
+        if (updates.getModel() != null) vehicle.setModel(updates.getModel());
+        if (updates.getColor() != null) vehicle.setColor(updates.getColor());
+
+        return repository.save(vehicle);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable Long id) {
+        repository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
 }
