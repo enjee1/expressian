@@ -4,6 +4,7 @@ import com.expressian.app.models.Customer;
 import com.expressian.app.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,7 +28,24 @@ public class CustomerController {
     }
 
     @PostMapping
-    public @ResponseBody Customer createCustomer(@RequestBody Customer newCustomer) {
-        return repository.save(newCustomer);
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
+        return new ResponseEntity<>(repository.save(newCustomer), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public @ResponseBody Customer updateCustomer(@PathVariable Long id, @RequestBody Customer updates) {
+        Customer customer = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (updates.getFirstName() != null) customer.setFirstName(updates.getFirstName());
+        if (updates.getLastName() != null) customer.setLastName(updates.getLastName());
+        if (updates.getAddress() != null) customer.setAddress(updates.getAddress());
+
+        return repository.save(customer);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id) {
+        repository.deleteById(id);
+        return new ResponseEntity<>("Deleted", HttpStatus.OK);
     }
 }
