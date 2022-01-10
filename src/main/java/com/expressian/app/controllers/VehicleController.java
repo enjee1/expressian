@@ -2,7 +2,6 @@ package com.expressian.app.controllers;
 
 import com.expressian.app.models.Customer;
 import com.expressian.app.models.Vehicle;
-import com.expressian.app.repositories.CustomerRepository;
 import com.expressian.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/vehicles")
+@RequestMapping("/api/vehicles")
 public class VehicleController {
 
     @Autowired
@@ -26,5 +25,10 @@ public class VehicleController {
     @GetMapping("/{id}")
     public Vehicle getVehicleById(@PathVariable Long vehicleId) {
         return repository.findById(vehicleId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping
+    public @ResponseBody Vehicle createVehicle(@RequestBody Vehicle newVehicle) {
+        return repository.save(newVehicle);
     }
 }
