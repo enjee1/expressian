@@ -3,6 +3,7 @@ package com.expressian.app.controllers;
 import com.expressian.app.models.Customer;
 import com.expressian.app.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,11 @@ public class CustomerController {
     @GetMapping("/{id}")
     public Customer getCustomerById(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/lastname/{lname}")
+    public ResponseEntity<List<Customer>> getCustomersByLastName(@PathVariable String lname) {
+        return new ResponseEntity<>(repository.findAllByLastName(lname, Sort.by("firstName")), HttpStatus.OK);
     }
 
     @PostMapping
