@@ -1,9 +1,9 @@
 package com.expressian.app.controllers;
 
-import com.expressian.app.models.Customer;
 import com.expressian.app.models.Vehicle;
 import com.expressian.app.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +26,11 @@ public class VehicleController {
     @GetMapping("/{id}")
     public Vehicle getVehicleById(@PathVariable Long id) {
         return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/makes/{make}")
+    public ResponseEntity<List<Vehicle>> getVehiclesByMake(@PathVariable String make) {
+        return new ResponseEntity<>(repository.findAllByMake(make, Sort.by("model")), HttpStatus.OK);
     }
 
     @PostMapping
