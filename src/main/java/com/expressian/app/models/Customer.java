@@ -1,8 +1,7 @@
 package com.expressian.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -13,6 +12,9 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String address;
+    @OneToMany
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private List<Rental> rentals;
 
     public Customer() {}
 
@@ -53,4 +55,5 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

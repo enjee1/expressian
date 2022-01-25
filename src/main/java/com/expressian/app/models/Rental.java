@@ -1,28 +1,25 @@
 package com.expressian.app.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
 
 @Entity
-public class Rental {
+public class
+Rental {
 
     @Id
     @GeneratedValue
     private Long id;
-    private Long vehicleId;
-    private Long customerId;
-    private Date startDate;
-    private Date endDate;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    private Customer customer;
+    private String startDate;
+    private String endDate;
     private Float fuelLevel;
     private Float price;
 
     public Rental() {}
 
-    public Rental(Long vehicleId, Long customerId, Date startDate, Date endDate, Float fuelLevel, Float price) {
-        this.vehicleId = vehicleId;
-        this.customerId = customerId;
+    public Rental(String startDate, String endDate, Float fuelLevel, Float price) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.fuelLevel = fuelLevel;
@@ -37,35 +34,27 @@ public class Rental {
         this.id = id;
     }
 
-    public Long getVehicleId() {
-        return vehicleId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
-    }
-
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
